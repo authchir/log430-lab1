@@ -1,0 +1,32 @@
+0001 AME LAB001 01.01 MAJ NOU Modifier le lab 1 de LOG430
+0002 AME LOG102 02.02 MAJ ASS Duree de test trop longue
+0003 AME LOG103 03.03 MAJ RES Test fichier incorrect
+0004 AME LOG304 04.04 MAJ ROU Architecture en couches
+0005 AME LAB005 05.05 CRI NOU Travail en groupe de 3 etudiants
+0006 AME LOG106 06.06 CRI ASS Laboratoire incomplet
+0007 AME LOG107 07.07 CRI RES Telecharger et configurer l'application
+0008 AME LOG108 08.08 CRI ROU Dessiner le diagramme de classes
+0009 AME LAB009 09.09 NOR NOU Remise electronique et papier
+0010 AME LOG110 10.10 NOR ASS Ecrire les tests unitaires
+0011 AME LOG111 11.11 NOR RES Execution en ligne non fonctionelle
+0012 AME LOG112 12.12 NOR ROU Lire et comprendre le diagramme de classes
+0013 AME LAB013 13.13 MIN NOU Remettre le lab a 9am
+0014 AME LOG014 14.14 MIN ASS Correction interactive
+0015 AME LOG015 15.15 MIN RES Executer tous les tests unitaires
+0016 AME LOG016 16.16 MIN ROU Correction du plan de cours
+0017 DEF LAB017 17.17 MAJ NOU Corriger la question 1 du lab 1 de LOG430
+0018 DEF LOG118 18.18 MAJ ASS Calculer la duree du test
+0019 DEF LOG119 19.19 MAJ RES Fichier mal ecrit
+0020 DEF LOG120 20.20 MAJ ROU Boucle a l'infini
+0021 DEF LAB021 21.21 CRI NOU Travail en groupe non permis
+0022 DEF LOG122 22.22 CRI ASS Laboratoire non redige
+0023 DEF LOG123 23.23 CRI RES Application est mal configuree
+0024 DEF LOG124 24.24 CRI ROU Diagramme de classes non valide
+0025 DEF LAB025 25.25 NOR NOU Remise electronique non disponible
+0026 DEF LOG126 26.26 NOR ASS Les tests unitaires ont ete effaces
+0027 DEF LOG127 27.27 NOR RES Execution en ligne est trop lente
+0028 DEF LOG128 28.28 NOR ROU Diagramme de classes n'a pas ete compris
+0029 DEF LAB029 29.29 MIN NOU Retard durant la remise du lab 1
+0030 DEF LAB030 30.30 MIN ASS Pas de correction interactive
+0031 DEF LAB031 31.31 MIN RES Les tests unitaires sont non valides
+0032 DEF LAB032 32.32 MIN ROU Le plan de cours a ete efface
