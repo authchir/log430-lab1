@@ -56,12 +56,10 @@ public class Main {
 		// Lets make sure that input and output files are provided on the
 		// command line
 
-		if (argv.length != 2) {
+		if (argv.length != 3) {
 
-			System.out
-					.println("\n\nNombre incorrect de parametres d'entree. Utilisation:");
-			System.out
-					.println("\njava Main <fichier d'entree> <fichier de sortie>");
+			System.out.println("\n\nNombre incorrect de parametres d'entree. Utilisation:");
+			System.out.println("\njava Main <fichier d'entree> <fichier de sortie> <fichier de sortie>");
 
 		} else {
 			// These are the declarations for the pipes.
@@ -71,6 +69,9 @@ public class Main {
 			PipedWriter pipe04 = new PipedWriter();
 			PipedWriter pipe05 = new PipedWriter();
 			PipedWriter pipe06 = new PipedWriter();
+			PipedWriter pipe07 = new PipedWriter();
+			PipedWriter pipe08 = new PipedWriter();
+			PipedWriter pipe09 = new PipedWriter();
 
 			// Instantiate the Program Filter Thread
 			Thread FileReaderFilter1 = new FileReaderFilter(argv[0], pipe01);
@@ -79,14 +80,26 @@ public class Main {
 			Thread LanguageFilter1 = new TypeFilter(pipe01, pipe02, pipe03);
 
 			// Instantiate the Course Filter Threads
-			Thread KeywordFilter1 = new SeverityFilter("CRI", pipe02, pipe04);
-			Thread KeywordFilter2 = new SeverityFilter("MAJ", pipe03, pipe05);
+			Thread KeywordFilter1 = new PartitionFilter(new Predicate<String>() {
+				@Override
+				public boolean eval(String line) {
+					return line.indexOf("CRI") != -1;
+				}
+			}, pipe02, pipe04, pipe07);
+			Thread KeywordFilter2 = new PartitionFilter(new Predicate<String>() {
+				@Override
+				public boolean eval(String line) {
+					return line.indexOf("MAJ") != -1;
+				}
+			}, pipe03, pipe05, pipe08);
 
 			// Instantiate the Merge Filter Thread
 			Thread MergeFilter1 = new MergeFilter(pipe04, pipe05, pipe06);
+			Thread MergeFilter2 = new MergeFilter(pipe07, pipe08, pipe09);
 
 			// Instantiate the FileWriter Filter Thread
 			Thread FileWriterFilter1 = new FileWriterFilter(argv[1], pipe06);
+			Thread FileWriterFilter2 = new FileWriterFilter(argv[2], pipe09);
 
 			// Start the threads (these are the filters)
 			FileReaderFilter1.start();
@@ -94,7 +107,9 @@ public class Main {
 			KeywordFilter1.start();
 			KeywordFilter2.start();
 			MergeFilter1.start();
+			MergeFilter2.start();
 			FileWriterFilter1.start();
+			FileWriterFilter2.start();
 			
 		}  // if
 		
