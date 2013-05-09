@@ -73,6 +73,7 @@ public class Main {
 			PipedWriter pipe08 = new PipedWriter();
 			PipedWriter pipe09 = new PipedWriter();
                         PipedWriter pipe10 = new PipedWriter();
+                        PipedWriter pipe11 = new PipedWriter();
 
                         
 			// Instantiate the Program Filter Thread
@@ -99,11 +100,13 @@ public class Main {
 			Thread MergeFilter1 = new MergeFilter(pipe04, pipe05, pipe06);
 			Thread MergeFilter2 = new MergeFilter(pipe07, pipe08, pipe09);
 
-                        Thread FormatFilter = new FormatFilter(pipe06, pipe10, 5,4,1,0);
+                        // Format the output
+                        Thread FormatFilter1 = new FormatFilter(pipe06, pipe10, 5,4,1,0);
+                        Thread FormatFilter2 = new FormatFilter(pipe09, pipe11, 5,4,1,0);
                         
 			// Instantiate the FileWriter Filter Thread
 			Thread FileWriterFilter1 = new FileWriterFilter(argv[1], pipe10);
-			Thread FileWriterFilter2 = new FileWriterFilter(argv[2], pipe09);
+			Thread FileWriterFilter2 = new FileWriterFilter(argv[2], pipe11);
                         
                         
 
@@ -114,7 +117,8 @@ public class Main {
 			KeywordFilter2.start();
 			MergeFilter1.start();
 			MergeFilter2.start();
-                        FormatFilter.start();
+                        FormatFilter1.start();
+                        FormatFilter2.start();
 			FileWriterFilter1.start();
 			FileWriterFilter2.start();
 
