@@ -5,4 +5,10 @@
 *.war
 *.ear
 
-dataout.txt
+dataout*.txt
+
+# NetBeans specific #
+build.xml
+nbproject/
+build/
+manifest.mf
