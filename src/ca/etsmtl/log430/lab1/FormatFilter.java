@@ -70,7 +70,11 @@ public class FormatFilter extends Thread {
                         log("received: " + lineOfText + ".");     
                         
                         String formatedLine = formatLine(lineOfText);
+                        
                         outputPipe.write(formatedLine);
+                        
+                        
+                        log("written: "+ formatedLine);
                         
                         lineOfText = "";
                         
@@ -105,12 +109,13 @@ public class FormatFilter extends Thread {
             int startIndex = columnDefinitions[column][0];
             int length = Math.min(columnDefinitions[column][1], line.length() - startIndex);
             
-            sb.append(line.substring(startIndex, length));
+            sb.append(line.substring(startIndex, startIndex + length));
             
             if(i != outputColumns.length){
                 sb.append(separator);
             }
         }
+        sb.append('\n');
         
         return sb.toString();
     }
