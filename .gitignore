@@ -12,3 +12,4 @@ build.xml
 nbproject/
 build/
 manifest.mf
+/bin

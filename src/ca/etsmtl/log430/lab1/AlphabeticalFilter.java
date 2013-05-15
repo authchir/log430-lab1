@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class AlphabeticalStatusFilter extends Thread {
+public class AlphabeticalFilter extends Thread {
 
 	private int statusIndex = 0;
 	private PipedReader inputPipe = new PipedReader();
 	private PipedWriter outputPipe;
 
-	public AlphabeticalStatusFilter(int statusIndex, PipedWriter inputPipe, PipedWriter outputPipe) {
+	public AlphabeticalFilter(int statusIndex, PipedWriter inputPipe, PipedWriter outputPipe) {
 
 		this.statusIndex = statusIndex;
 
@@ -95,7 +95,7 @@ public class AlphabeticalStatusFilter extends Thread {
 
 				System.out.println("AlphabeticalStatusFilter " + ":: sending: " + s + ".");
 
-				outputPipe.write(s);
+				outputPipe.write(s + '\n');
 				outputPipe.flush();
 			}
 
