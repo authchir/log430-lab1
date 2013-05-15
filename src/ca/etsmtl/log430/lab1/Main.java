@@ -1,49 +1,46 @@
 package ca.etsmtl.log430.lab1;
 
 import java.io.PipedWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**************************************************************************************
- ** Class name: Main Original author: A.J. Lattanze, CMU Date: 12/3/99
- ** Version 1.2
+ ** Class name: Main Original author: A.J. Lattanze, CMU Date: 12/3/99 Version
+ * 1.2
  ** 
  ** Adapted by R. Champagne, Ecole de technologie superieure 2002-May-08,
- ** 2011-Jan-12, 2012-Jan-11.
+ * 2011-Jan-12, 2012-Jan-11.
  ** 
  *************************************************************************************** 
  ** Purpose: Assignment 1 for LOG430, Architecture logicielle. This assignment is
- ** designed to illustrate a pipe and filter architecture. For the instructions,
- ** refer to the assignment write-up.
+ * designed to illustrate a pipe and filter architecture. For the instructions,
+ * refer to the assignment write-up.
  ** 
  ** Abstract: This class contains the main method for assignment 1. The
- ** assignment 1 program consists of these files:
+ * assignment 1 program consists of these files:
  ** 
- ** 1) Main: instantiates all filters and pipes, starts all filters.
- ** 2) FileReaderFilter: reads input file and sends each line to its output pipe.
- ** 3) TypeFilter: separates the input stream in two languages (FRA, EN) and writes
- **    lines to the appropriate output pipe.
- ** 4) SeverityFilter: determines if an entry contains a particular severity specified
- **    at instantiation. If so, sends the whole line to its output pipe.
- ** 5) MergeFilter: accepts inputs from 2 input pipes and writes them to its output pipe.
- ** 6) FileWriterFilter: sends its input stream to a text file.
+ ** 1) Main: instantiates all filters and pipes, starts all filters. 2)
+ * FileReaderFilter: reads input file and sends each line to its output pipe. 3)
+ * TypeFilter: separates the input stream in two languages (FRA, EN) and writes
+ * lines to the appropriate output pipe. 4) SeverityFilter: determines if an
+ * entry contains a particular severity specified at instantiation. If so, sends
+ * the whole line to its output pipe. 5) MergeFilter: accepts inputs from 2
+ * input pipes and writes them to its output pipe. 6) FileWriterFilter: sends
+ * its input stream to a text file.
  ** 
  ** Pseudo Code:
  ** 
- ** instantiate all filters and pipes
- ** start FileReaderFilter
- ** start TypeFilter
- ** start SeverityFilter for CRI
- ** start SeverityFilter for MAJ
- ** start MergeFilter
- ** start FileWriterFilter
+ ** instantiate all filters and pipes start FileReaderFilter start TypeFilter
+ * start SeverityFilter for CRI start SeverityFilter for MAJ start MergeFilter
+ * start FileWriterFilter
  ** 
  ** Running the program
  ** 
  ** java Main IputFile OutputFile > DebugFile
  ** 
- ** Main - Program name
- ** InputFile - Text input file (see comments below)
- ** OutputFile - Text output file with students
- ** DebugFile - Optional file to direct debug statements
+ ** Main - Program name InputFile - Text input file (see comments below)
+ * OutputFile - Text output file with students DebugFile - Optional file to
+ * direct debug statements
  ** 
  ** Modification Log
  ************************************************************************************** 
@@ -62,7 +59,7 @@ public class Main {
 			System.out.println("\njava Main <fichier d'entree> <fichier de sortie> <fichier de sortie>");
 
 		} else {
-			// These are the declarations for the pipes.
+			Collection<Thread> filters = new ArrayList<Thread>();
 			PipedWriter pipe01 = new PipedWriter();
 			PipedWriter pipe02 = new PipedWriter();
 			PipedWriter pipe03 = new PipedWriter();
@@ -72,67 +69,38 @@ public class Main {
 			PipedWriter pipe07 = new PipedWriter();
 			PipedWriter pipe08 = new PipedWriter();
 			PipedWriter pipe09 = new PipedWriter();
-                        PipedWriter pipe10 = new PipedWriter();
-                        PipedWriter pipe11 = new PipedWriter();
-                        PipedWriter pipe12 = new PipedWriter();
-                        PipedWriter pipe13 = new PipedWriter();
-
-                        
-			// Instantiate the Program Filter Thread
-			Thread FileReaderFilter1 = new FileReaderFilter(argv[0], pipe01);
-
-			// Instantiate the TypeFilter Thread
-			Thread LanguageFilter1 = new TypeFilter(pipe01, pipe02, pipe03);
-
-			// Instantiate the Course Filter Threads
-			Thread KeywordFilter1 = new PartitionFilter(new Predicate<String>() {
-				@Override
-				public boolean eval(String line) {
-					return line.indexOf("CRI") != -1;
-				}
-			}, pipe02, pipe04, pipe07);
-			Thread KeywordFilter2 = new PartitionFilter(new Predicate<String>() {
-				@Override
-				public boolean eval(String line) {
-					return line.indexOf("MAJ") != -1;
-				}
-			}, pipe03, pipe05, pipe08);
-
-			// Instantiate the Merge Filter Thread
-			Thread MergeFilter1 = new MergeFilter(pipe04, pipe05, pipe06);
-			Thread MergeFilter2 = new MergeFilter(pipe07, pipe08, pipe09);
-
-                        // Format the output
-                        Thread FormatFilter1 = new FormatFilter(pipe06, pipe10, 5,4,1,0);
-                        Thread FormatFilter2 = new FormatFilter(pipe09, pipe11, 5,4,1,0);
-                        
-                        // Format the output
-                        Thread AlphabeticalFilter1 = new AlphabeticalFilter(0, pipe10, pipe12);
-                        Thread AlphabeticalFilter2 = new AlphabeticalFilter(0, pipe11, pipe13);
-                        
-			// Instantiate the FileWriter Filter Thread
-			Thread FileWriterFilter1 = new FileWriterFilter(argv[1], pipe12);
-			Thread FileWriterFilter2 = new FileWriterFilter(argv[2], pipe13);
-                        
-                        
+			PipedWriter pipe10 = new PipedWriter();
+			PipedWriter pipe11 = new PipedWriter();
+			PipedWriter pipe12 = new PipedWriter();
+			PipedWriter pipe13 = new PipedWriter();
+			PipedWriter pipe14 = new PipedWriter();
+			PipedWriter pipe15 = new PipedWriter();
+			PipedWriter pipe16 = new PipedWriter();
+			PipedWriter pipe17 = new PipedWriter();
+			
+			filters.add(new FileReaderFilter(argv[0], pipe01));
+			filters.add(new TypeFilter(pipe01, pipe02, pipe03));
+			filters.add(new CloneDataFilter(pipe02, pipe04, pipe05));
+			filters.add(new CloneDataFilter(pipe03, pipe06, pipe07));
+			filters.add(new SeverityFilter("CRI", pipe04, pipe08, true));
+			filters.add(new SeverityFilter("CRI", pipe05, pipe09, false));
+			filters.add(new SeverityFilter("MAJ", pipe06, pipe10, true));
+			filters.add(new SeverityFilter("MAJ", pipe07, pipe11, false));
+			filters.add(new MergeFilter(pipe08, pipe10, pipe12));
+			filters.add(new MergeFilter(pipe09, pipe11, pipe13));
+			filters.add(new FormatFilter(pipe12, pipe14, 5, 4, 1, 0));
+			filters.add(new FormatFilter(pipe13, pipe15, 5, 4, 1, 0));
+			filters.add(new AlphabeticalFilter(0, pipe14, pipe16));
+			filters.add(new AlphabeticalFilter(0, pipe15, pipe17));
+			filters.add(new FileWriterFilter(argv[1], pipe16));
+			filters.add(new FileWriterFilter(argv[2], pipe17));
 
 			// Start the threads (these are the filters)
-			FileReaderFilter1.start();
-			LanguageFilter1.start();
-			KeywordFilter1.start();
-			KeywordFilter2.start();
-			MergeFilter1.start();
-			MergeFilter2.start();
-                        FormatFilter1.start();
-                        FormatFilter2.start();
-                        AlphabeticalFilter1.start();
-                        AlphabeticalFilter2.start();
-			FileWriterFilter1.start();
-			FileWriterFilter2.start();
+			for (Thread t : filters)
+				t.start();
 
-			
-		}  // if
-		
+		} // if
+
 	} // main
-	
+
 } // Main

@@ -57,11 +57,13 @@ public class SeverityFilter extends Thread {
 	String severity;
 	PipedReader inputPipe = new PipedReader();
 	PipedWriter outputPipe = new PipedWriter();
+	boolean accept;
 
 	public SeverityFilter(String severity, PipedWriter inputPipe,
-			PipedWriter outputPipe) {
+			PipedWriter outputPipe, boolean accept) {
 
 		this.severity = severity;
+		this.accept = accept;
 
 		try {
 
@@ -118,7 +120,7 @@ public class SeverityFilter extends Thread {
 						System.out.println("SeverityFilter " + severity
 								+ ":: received: " + LineOfText + ".");
 
-						if (LineOfText.indexOf(severity) != -1) {
+						if (accept == (LineOfText.contains(severity))) {
 
 							System.out.println("SeverityFilter "
 									+ severity + ":: sending: "
