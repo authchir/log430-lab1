@@ -74,10 +74,6 @@ public class Main {
 			PipedWriter pipe09 = new PipedWriter();
                         PipedWriter pipe10 = new PipedWriter();
                         PipedWriter pipe11 = new PipedWriter();
-                        
-                        //Alpha Filter Pipes
-                        PipedWriter pipe12 = new PipedWriter();
-                        PipedWriter pipe13 = new PipedWriter();
 
                         
 			// Instantiate the Program Filter Thread
@@ -107,14 +103,10 @@ public class Main {
                         // Format the output
                         Thread FormatFilter1 = new FormatFilter(pipe06, pipe10, 5,4,1,0);
                         Thread FormatFilter2 = new FormatFilter(pipe09, pipe11, 5,4,1,0);
-
-                        // Sort alphabetically the output
-                        Thread AlphabeticalStatusFilter1 = new AlphabeticalStatusFilter(0, pipe10, pipe12);
-                        Thread AlphabeticalStatusFilter2 = new AlphabeticalStatusFilter(0, pipe11, pipe13);
                         
 			// Instantiate the FileWriter Filter Thread
-			Thread FileWriterFilter1 = new FileWriterFilter(argv[1], pipe12);
-			Thread FileWriterFilter2 = new FileWriterFilter(argv[2], pipe13);
+			Thread FileWriterFilter1 = new FileWriterFilter(argv[1], pipe10);
+			Thread FileWriterFilter2 = new FileWriterFilter(argv[2], pipe11);
                         
                         
 
@@ -127,10 +119,6 @@ public class Main {
 			MergeFilter2.start();
                         FormatFilter1.start();
                         FormatFilter2.start();
-                        
-                        AlphabeticalStatusFilter1.start();
-                        AlphabeticalStatusFilter2.start();
-                        
 			FileWriterFilter1.start();
 			FileWriterFilter2.start();
 
