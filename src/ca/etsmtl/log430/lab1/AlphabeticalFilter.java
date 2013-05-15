@@ -83,12 +83,10 @@ public class AlphabeticalFilter extends Thread {
 			} // while
 
 			Collections.sort(tickets, new Comparator<String>() {
-
 				@Override
 				public int compare(String o1, String o2) {
 					return (o1.split(" ")[statusIndex]).compareTo(o2.split(" ")[statusIndex]);
 				}
-
 			});
 
 			for (String s : tickets) {
@@ -120,5 +118,4 @@ public class AlphabeticalFilter extends Thread {
 		} // try/catch
 
 	} // run
-
 }
