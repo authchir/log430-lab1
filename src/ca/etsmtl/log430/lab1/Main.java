@@ -118,7 +118,7 @@ public class Main {
 			filters.add(new StatusFilter("NOU", pipe02, pipe04, true));
 			filters.add(new CloneDataFilter(pipe04, pipe05, pipe06));
 
-			filters.add(new StatusFilter("RES", pipe03, pipe12, true));
+			filters.add(new StatusFilter("RES", pipe03, pipe12, false));
 			filters.add(new CloneDataFilter(pipe12, pipe13, pipe14));
 
 			filters.add(new SeverityFilter("CRI", pipe05, pipe07, true));
